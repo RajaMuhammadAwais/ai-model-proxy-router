@@ -24,11 +24,11 @@ class ObservabilityManager:
         
         # Counters
         self.request_counter = self.meter.create_counter(
-            "llm_proxy_requests_total",
+            "gen_ai.client.operation.duration.count",
             description="Total number of requests processed by the proxy"
         )
         self.latency_histogram = self.meter.create_histogram(
-            "llm_proxy_request_latency",
+            "gen_ai.client.operation.duration",
             description="Latency of LLM requests",
             unit="s"
         )
@@ -37,6 +37,10 @@ class ObservabilityManager:
         FastAPIInstrumentor.instrument_app(app)
 
     def record_request(self, provider: str, model: str, latency: float, status: str):
-        attributes = {"provider": provider, "model": model, "status": status}
+        attributes = {
+            "gen_ai.provider.name": provider,
+            "gen_ai.request.model": model,
+            "status": status,
+        }
         self.request_counter.add(1, attributes)
         self.latency_histogram.record(latency, attributes)

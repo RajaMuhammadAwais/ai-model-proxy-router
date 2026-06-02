@@ -3,3 +3,15 @@ __pycache__/
 .env
 .cache/
 venv/
+.venv/
+.browser_data_dir/
+.local/
+.config/
+.logs/
+.npm/
+.manus/
+.secrets/
+dist/
+build/
+.pytest_cache/
+.ruff_cache/

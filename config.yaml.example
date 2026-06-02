@@ -23,6 +23,11 @@ routing_policy:
     cost: 0.3
     capability: 0.4
 
+security:
+  max_prompt_chars: 200000
+  block_prompt_injection_signals: true
+  redact_request_content_in_logs: true
+
 cache_enabled: True
 redis_url: "${REDIS_URL}"
 log_level: INFO

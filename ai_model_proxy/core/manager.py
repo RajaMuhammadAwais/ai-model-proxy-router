@@ -6,17 +6,19 @@ from .router import RouterEngine
 from ..providers.openai_adapter import OpenAICompatibleProvider
 from ..models.llm_metadata import ModelMetadata, ChatCompletionRequest
 from ..services.reliability import ReliabilityManager
+from ..services.observability import ObservabilityManager
 
 logger = logging.getLogger(__name__)
 
 class ProviderManager:
-    def __init__(self, config_manager):
+    def __init__(self, config_manager, observability=None):
         self.config_manager = config_manager
         self.providers = {}
         self.models: List[ModelMetadata] = []
         self.analyzer = RequestAnalyzer()
         self.router = RouterEngine(config_manager.get_routing_policy())
         self.reliability = ReliabilityManager()
+        self.observability = observability or ObservabilityManager()
         self._initialize_providers()
 
     def _initialize_providers(self):
@@ -60,7 +62,7 @@ class ProviderManager:
             async def call_provider():
                 return await provider.chat_completion(
                     model_id=best_model.id,
-                    messages=[m.dict() for m in request.messages]
+                    messages=[m.model_dump() for m in request.messages]
                 )
 
             response = await circuit.call(self.reliability.with_retry, call_provider)
@@ -69,3 +71,5 @@ class ProviderManager:
         finally:
             latency = time.time() - start_time
             self.router.update_metrics(best_model.id, best_model.provider, latency, success)
+            status = "ok" if success else "error"
+            self.observability.record_request(best_model.provider, best_model.id, latency, status)

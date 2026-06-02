@@ -19,8 +19,8 @@ from .core.manager import ProviderManager
 from .services.observability import ObservabilityManager
 from .services.cache import CacheManager
 
-provider_manager = ProviderManager(config_manager)
 observability = ObservabilityManager()
+provider_manager = ProviderManager(config_manager, observability=observability)
 cache = CacheManager(enabled=config_manager.config.cache_enabled, redis_url=config_manager.config.redis_url)
 
 @app.on_event("startup")

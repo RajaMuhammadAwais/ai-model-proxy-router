@@ -1,5 +1,6 @@
 import yaml
 import os
+import re
 from typing import Any, Dict, Optional
 from .schema import AppConfig
 from dotenv import load_dotenv
@@ -18,14 +19,23 @@ class ConfigManager:
         with open(self.config_path, 'r') as f:
             raw_config = yaml.safe_load(f)
         
-        # Environment variable overrides (simplified example)
-        # In production, use pydantic-settings for robust env overrides
-        self.config = AppConfig(**raw_config)
+        self.config = AppConfig(**self._expand_env(raw_config))
+
+    def _expand_env(self, value: Any) -> Any:
+        if isinstance(value, dict):
+            return {k: self._expand_env(v) for k, v in value.items()}
+        if isinstance(value, list):
+            return [self._expand_env(item) for item in value]
+        if isinstance(value, str):
+            match = re.fullmatch(r"\$\{([A-Z0-9_]+)\}", value)
+            if match:
+                return os.getenv(match.group(1), "")
+        return value
 
     def get_provider_config(self, provider_name: str) -> Optional[Dict[str, Any]]:
         for provider in self.config.providers:
             if provider.name == provider_name:
-                return provider.dict()
+                return provider.model_dump()
         return None
 
     def get_routing_policy(self) -> Dict[str, Any]:

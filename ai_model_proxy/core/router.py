@@ -6,7 +6,7 @@ logger = logging.getLogger(__name__)
 
 class RouterEngine:
     def __init__(self, policy: Dict[str, float]):
-        self.policy = policy
+        self.policy = policy.get("weights", policy)
         self.model_metrics: Dict[str, Dict[str, Any]] = {}
 
     async def route_request(self, analyzed_request: Dict[str, Any], available_models: List[ModelMetadata]) -> ModelMetadata:
@@ -16,13 +16,17 @@ class RouterEngine:
         scored_models = []
         for model in available_models:
             score = self._calculate_score(model, analyzed_request)
-            scored_models.append((score, model))
+            if score > 0:
+                scored_models.append((score, model))
+
+        if not scored_models:
+            raise ValueError("No eligible models match the request constraints")
 
         # Sort by score descending
         scored_models.sort(key=lambda x: x[0], reverse=True)
         
         best_model = scored_models[0][1]
-        logger.info(f"Routed request to {best_model.provider}/{best_model.id} with score {scored_models[0][0]}")
+        logger.info("Routed request to %s/%s with score %.4f", best_model.provider, best_model.id, scored_models[0][0])
         return best_model
 
     def _calculate_score(self, model: ModelMetadata, analyzed_request: Dict[str, Any]) -> float:
@@ -44,13 +48,17 @@ class RouterEngine:
         
         # Latency Score (1.0 - normalized latency)
         # Assuming max latency is 5.0s for normalization
-        latency_score = 1.0 - min(model.latency_score / 5.0, 1.0)
+        observed = self.model_metrics.get(f"{model.provider}:{model.id}", {})
+        observed_latency = observed.get("latency", model.latency_score)
+        latency_score = 1.0 - min(observed_latency / 5.0, 1.0)
+        reliability_score = observed.get("success_rate", 1.0 if model.health_status == "healthy" else 0.0)
         
         # Weighted Sum
         total_score = (
             self.policy["capability"] * cap_score +
             self.policy["cost"] * cost_score +
-            self.policy["latency"] * latency_score
+            self.policy["latency"] * latency_score +
+            self.policy.get("reliability", 0.0) * reliability_score
         )
         
         return total_score
