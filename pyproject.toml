@@ -27,11 +27,6 @@ dev = [
   "mypy>=1.10",
 ]
 
-[tool.pytest.ini_options]
-testpaths = ["tests"]
-asyncio_mode = "auto"
-pythonpath = ["."]
-
 [tool.ruff]
 line-length = 120
 target-version = "py311"

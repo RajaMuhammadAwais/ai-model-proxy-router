@@ -29,7 +29,7 @@ This roadmap was verified on 2026-06-02 from primary sources:
 - API-key authentication with no default fallback secret.
 - Request size limits and high-signal prompt-injection blocking.
 - OpenTelemetry GenAI-aligned metrics attributes.
-- CI workflow and focused unit tests for routing and guardrails.
+- CI workflow with a Python compile smoke check.
 
 ## Quick Start
 
@@ -53,7 +53,7 @@ python -m uvicorn ai_model_proxy.main:app --host 0.0.0.0 --port 8000
 
 `config.yaml.example` defines providers, explicit model metadata, routing weights, cache settings, and security guardrails. Provider API keys should be referenced as environment variables and never committed.
 
-Provider `/models` responses usually include model ids, not reliable enterprise routing metadata. This project therefore requires explicit model metadata before a model can receive traffic. See [docs/routing-signals.md](docs/routing-signals.md) for the routing contract, hard constraints, score calculation, and audit fields.
+Provider `/models` responses usually include model ids, not reliable enterprise routing metadata. This project therefore requires explicit model metadata before a model can receive traffic.
 
 Routing weights must sum to `1.0`. A production policy should include explicit weights for:
 
@@ -62,14 +62,10 @@ Routing weights must sum to `1.0`. A production policy should include explicit w
 - `latency`
 - `reliability`
 
-## Enterprise Plan
-
-The enterprise hardening plan is in [docs/enterprise-roadmap.md](docs/enterprise-roadmap.md). It covers production controls, distributed quotas, provider health, evals, governance, auditability, and platform maturity.
-
 ## Development
 
 ```bash
-pytest -q
+python -m compileall ai_model_proxy
 ```
 
 ## License

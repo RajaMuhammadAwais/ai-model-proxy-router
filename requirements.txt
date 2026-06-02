@@ -12,5 +12,3 @@ opentelemetry-exporter-otlp>=1.25
 python-dotenv>=1.0
 redis>=5.0
 openai>=1.30
-pytest>=8.2
-pytest-asyncio>=0.23
