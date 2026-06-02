@@ -33,4 +33,12 @@ class RequestGuardrails:
 
     def _message_text(self, request: ChatCompletionRequest) -> Iterable[str]:
         for message in request.messages:
-            yield message.content
+            content = message.content
+            if isinstance(content, str):
+                yield content
+            elif isinstance(content, list):
+                for part in content:
+                    if isinstance(part, dict) and isinstance(part.get("text"), str):
+                        yield part["text"]
+            elif content is not None:
+                yield str(content)

@@ -58,3 +58,70 @@ async def test_router_uses_observed_reliability_when_weighted():
     )
 
     assert selected.id == "steady"
+
+
+@pytest.mark.asyncio
+async def test_router_normalizes_cost_against_eligible_candidates():
+    router = RouterEngine({"weights": {"capability": 0.0, "cost": 1.0, "latency": 0.0, "reliability": 0.0}})
+    selected = await router.route_request(
+        {
+            "required_capabilities": {
+                "reasoning_strength": 0.5,
+                "coding_strength": 0.5,
+                "context_length": 1000,
+            }
+        },
+        [
+            model("expensive", "a", 4096, 1.0, 1.0, 1.00),
+            model("cheap", "b", 4096, 0.7, 0.7, 0.20),
+        ],
+    )
+
+    assert selected.id == "cheap"
+    assert router.last_decision["effective_weights"] == {"cost": 1.0}
+
+
+@pytest.mark.asyncio
+async def test_router_skips_missing_cost_or_latency_signals_without_guessing():
+    router = RouterEngine({"weights": {"capability": 0.5, "cost": 0.25, "latency": 0.25, "reliability": 0.0}})
+    selected = await router.route_request(
+        {
+            "required_capabilities": {
+                "reasoning_strength": 0.8,
+                "coding_strength": 0.2,
+                "context_length": 1000,
+            }
+        },
+        [
+            model("unknown-cost", "a", 4096, 1.0, 0.7, None, latency=None),
+            model("known-cost", "b", 4096, 0.7, 0.7, 0.001, latency=1.0),
+        ],
+    )
+
+    assert selected.id == "unknown-cost"
+    assert "cost" not in router.last_decision["raw_signals"]
+    assert "latency" not in router.last_decision["raw_signals"]
+
+
+@pytest.mark.asyncio
+async def test_router_enforces_tool_calling_as_hard_constraint():
+    router = RouterEngine({"weights": {"capability": 1.0, "cost": 0.0, "latency": 0.0, "reliability": 0.0}})
+    tool_model = model("tools", "b", 4096, 0.7, 0.7, 0.01)
+    tool_model.capabilities.tool_calling = True
+
+    selected = await router.route_request(
+        {
+            "required_capabilities": {
+                "reasoning_strength": 0.5,
+                "coding_strength": 0.5,
+                "context_length": 1000,
+                "tool_calling": True,
+            }
+        },
+        [
+            model("plain", "a", 4096, 1.0, 1.0, 0.001),
+            tool_model,
+        ],
+    )
+
+    assert selected.id == "tools"

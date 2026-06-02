@@ -24,6 +24,7 @@ This roadmap was verified on 2026-06-02 from primary sources:
 - OpenAI-compatible `/v1/chat/completions`, `/v1/models`, and placeholder `/v1/embeddings` endpoints.
 - Config-driven provider registry for OpenAI-compatible providers such as NVIDIA NIM, OpenRouter, Groq, and Gemini-compatible gateways.
 - Routing by capability, cost, latency, context fit, health, and observed reliability.
+- No-guess routing contract: model capability, context, price, and latency come from explicit config or observed telemetry, never placeholder inference.
 - Retry and circuit-breaker primitives for provider resilience.
 - API-key authentication with no default fallback secret.
 - Request size limits and high-signal prompt-injection blocking.
@@ -50,7 +51,9 @@ python -m uvicorn ai_model_proxy.main:app --host 0.0.0.0 --port 8000
 
 ## Configuration
 
-`config.yaml.example` defines providers, routing weights, cache settings, and security guardrails. Provider API keys should be referenced as environment variables and never committed.
+`config.yaml.example` defines providers, explicit model metadata, routing weights, cache settings, and security guardrails. Provider API keys should be referenced as environment variables and never committed.
+
+Provider `/models` responses usually include model ids, not reliable enterprise routing metadata. This project therefore requires explicit model metadata before a model can receive traffic. See [docs/routing-signals.md](docs/routing-signals.md) for the routing contract, hard constraints, score calculation, and audit fields.
 
 Routing weights must sum to `1.0`. A production policy should include explicit weights for:
 

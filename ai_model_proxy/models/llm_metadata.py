@@ -1,8 +1,9 @@
+from typing import Any, Dict, List, Literal, Optional
+
 from pydantic import BaseModel, Field
-from typing import List, Optional, Dict, Any
 
 class ModelCapabilities(BaseModel):
-    context_length: int
+    context_length: int = Field(gt=0)
     reasoning_strength: float = Field(ge=0, le=1)
     coding_strength: float = Field(ge=0, le=1)
     tool_calling: bool = False
@@ -12,14 +13,14 @@ class ModelMetadata(BaseModel):
     id: str
     provider: str
     capabilities: ModelCapabilities
-    latency_score: float = 0.0  # Dynamic
-    cost_per_1k_tokens: float
-    health_status: str = "healthy"
+    latency_score: Optional[float] = Field(default=None, ge=0)
+    cost_per_1k_tokens: Optional[float] = Field(default=None, ge=0)
+    health_status: Literal["healthy", "degraded", "unhealthy", "disabled"] = "healthy"
     last_updated: Optional[float] = None
 
 class ChatMessage(BaseModel):
     role: str
-    content: str
+    content: Any
 
 class ChatCompletionRequest(BaseModel):
     model: Optional[str] = None
@@ -34,3 +35,5 @@ class ChatCompletionRequest(BaseModel):
     frequency_penalty: Optional[float] = 0.0
     logit_bias: Optional[Dict[str, float]] = None
     user: Optional[str] = None
+    tools: Optional[List[Dict[str, Any]]] = None
+    tool_choice: Optional[Any] = None

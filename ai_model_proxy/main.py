@@ -1,7 +1,12 @@
-from fastapi import FastAPI, Depends, HTTPException
+import logging
+
+from fastapi import FastAPI
+
 from .api.v1.endpoints import router as v1_router
 from .config.manager import ConfigManager
-import logging
+from .core.manager import ProviderManager
+from .services.cache import CacheManager
+from .services.observability import ObservabilityManager
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -15,10 +20,6 @@ app = FastAPI(
 
 # Initialize Components
 config_manager = ConfigManager()
-from .core.manager import ProviderManager
-from .services.observability import ObservabilityManager
-from .services.cache import CacheManager
-
 observability = ObservabilityManager()
 provider_manager = ProviderManager(config_manager, observability=observability)
 cache = CacheManager(enabled=config_manager.config.cache_enabled, redis_url=config_manager.config.redis_url)
