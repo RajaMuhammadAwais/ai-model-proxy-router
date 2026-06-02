@@ -27,7 +27,8 @@ class ProviderManager:
             provider = OpenAICompatibleProvider(
                 name=p_conf.name,
                 base_url=p_conf.base_url,
-                api_key=p_conf.api_key
+                api_key=p_conf.api_key,
+                configured_models=p_conf.models,
             )
             self.providers[p_conf.name] = provider
 
@@ -37,6 +38,8 @@ class ProviderManager:
             try:
                 models = await provider.list_models()
                 all_models.extend(models)
+                if not models:
+                    logger.warning("Provider %s has no routable models with explicit metadata", name)
             except Exception as e:
                 logger.error(f"Failed to fetch models from {name}: {e}")
         self.models = all_models

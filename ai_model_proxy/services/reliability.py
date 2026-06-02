@@ -1,7 +1,7 @@
-import asyncio
 import logging
 import time
-from typing import Callable, Any, Dict
+from typing import Any, Callable, Dict
+
 from tenacity import retry, wait_exponential, stop_after_attempt
 
 logger = logging.getLogger(__name__)

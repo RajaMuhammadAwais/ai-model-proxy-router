@@ -1,11 +1,13 @@
 from pydantic import BaseModel, Field, field_validator
 from typing import List, Dict, Optional
 
+from ..models.llm_metadata import ModelMetadata
+
 class ProviderConfig(BaseModel):
     name: str
     base_url: str
     api_key: str
-    models: List[str] = Field(default_factory=list) # "auto-discovered" if empty or specific list
+    models: List[ModelMetadata] = Field(default_factory=list)
 
 class RoutingPolicy(BaseModel):
     strategy: str = "adaptive"

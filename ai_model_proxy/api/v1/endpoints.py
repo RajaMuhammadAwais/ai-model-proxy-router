@@ -1,16 +1,18 @@
-from fastapi import APIRouter, HTTPException, Request
-from ...models.llm_metadata import ChatCompletionRequest
 from typing import Any, Dict
 
-router = APIRouter()
+from fastapi import APIRouter, Depends
 
-from fastapi import Depends
 from ...core.manager import ProviderManager
+from ...models.llm_metadata import ChatCompletionRequest
 from ...security.auth import get_api_key
 from ...security.guardrails import RequestGuardrails
 
+router = APIRouter()
+
+
 def get_pm():
     from ...main import provider_manager
+
     return provider_manager
 
 @router.post("/chat/completions")
