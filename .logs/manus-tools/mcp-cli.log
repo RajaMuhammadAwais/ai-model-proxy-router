@@ -1,0 +1,3 @@
+{"time":"2026-05-28T03:48:59.37618351-04:00","level":"INFO","msg":"Sentry initialized","dsn":"https://37607459fe10***","environment":"PROD","release":"8.0.20","sandbox_id":"unknown"}
+{"time":"2026-05-28T03:48:59.376399758-04:00","level":"INFO","msg":"Sentry initialized successfully"}
+{"time":"2026-05-28T03:48:59.376923245-04:00","level":"INFO","msg":"MCP CLI initialized"}

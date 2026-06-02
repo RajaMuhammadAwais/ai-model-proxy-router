@@ -1,0 +1,10 @@
+{"time":"2026-05-28T03:48:59.378403018-04:00","level":"INFO","msg":"Sentry initialized","dsn":"https://37607459fe10***","environment":"PROD","release":"8.0.20","sandbox_id":"unknown"}
+{"time":"2026-05-28T03:48:59.378439612-04:00","level":"INFO","msg":"Sentry initialized successfully"}
+{"time":"2026-05-28T03:48:59.37844419-04:00","level":"INFO","msg":"manus-upload-file initialized"}
+{"time":"2026-05-28T03:48:59.383158659-04:00","level":"INFO","msg":"[otel] Providers initialised (traces+metrics+logs)","service":"sandbox-runtime-v2","endpoint":"https://http.butterflyotel.online"}
+{"time":"2026-05-28T03:48:59.383186329-04:00","level":"INFO","msg":"[otel] trace propagation enabled","propagators":"tracecontext,baggage","exporter":"otlp/http","endpoint":"https://http.butterflyotel.online","service.name":"sandbox-runtime-v2","service.version":"8.0.20"}
+{"time":"2026-05-28T03:48:59.383202202-04:00","level":"INFO","msg":"OTel log bridge enabled"}
+{"time":"2026-05-28T03:48:59.383217019-04:00","level":"INFO","msg":"[sbxotel] process telemetry initialised","program":"manus-mcp-cli","sandbox_id":"unknown"}
+{"time":"2026-05-28T03:48:59.384286285-04:00","level":"INFO","msg":"Starting MCP RPC server","addr":"localhost:8350","sandbox_id":"unknown"}
+{"time":"2026-05-28T03:48:59.484902822-04:00","level":"INFO","msg":"[Server] MCP RPC server started","addr":"localhost:8350","sandbox_id":"unknown"}
+{"time":"2026-06-02T06:50:31.148569516-04:00","level":"INFO","msg":"[sbxotel] session_id resolved post-boot; sentry scope updated","attempts":10,"sandbox_id":"unknown","session_id":"ZfHKuPnd36iAImdJDwZ41k"}

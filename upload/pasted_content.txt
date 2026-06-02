@@ -1,0 +1,216 @@
+You are a senior principal software architect + backend engineer + DevOps engineer.
+
+Your task is to design and build a production-grade “AI Model Proxy & Intelligent Router System” that acts as a universal OpenAI-compatible gateway for multiple LLM providers.
+
+This system MUST be:
+
+- Fully dynamic (NO hardcoded logic, NO fixed routing rules written manually)
+- Research-based (use real provider capabilities and documented APIs)
+- Extensible (plugin-based provider architecture)
+- Production-ready (logging, retries, rate limiting, caching, auth)
+- Clean architecture (separation of concerns)
+- Secure by design
+- Config-driven (all behavior must come from config or runtime metadata)
+
+---
+
+## 🎯 CORE OBJECTIVE
+
+Build a system that exposes an OpenAI-compatible API:
+
+/v1/chat/completions
+/v1/models
+/v1/embeddings
+
+But internally routes requests intelligently across multiple LLM providers such as:
+
+- NVIDIA NIM API
+- OpenRouter
+- Groq
+- Gemini API
+- Ollama (local models)
+- Any additional OpenAI-compatible provider
+
+---
+
+## 🧠 INTELLIGENT ROUTING REQUIREMENTS
+
+Routing MUST NOT be hardcoded.
+
+Instead implement:
+
+### 1. Capability-based routing
+Each model must declare metadata:
+
+- context length
+- latency score (dynamic measured)
+- cost per token
+- reasoning strength
+- coding strength
+- tool-calling support
+- multimodal support
+
+This metadata must be:
+- loaded from config OR provider introspection
+- updated dynamically (not static constants)
+
+---
+
+### 2. Request Analyzer (NO hardcoded rules)
+Build a prompt classifier module that:
+- detects intent (coding, reasoning, chat, summarization, etc.)
+- uses lightweight ML or embedding similarity OR LLM-based classification
+- avoids static if/else rules
+
+---
+
+### 3. Router Engine
+Must choose best model based on:
+- latency
+- cost
+- capability match
+- current load
+- provider health
+
+Use a scoring system that is:
+- configurable
+- explainable
+- dynamic
+
+---
+
+### 4. Fallback System
+If provider fails:
+- retry with exponential backoff
+- switch to next best model automatically
+- never crash request
+
+---
+
+## ⚙️ ARCHITECTURE REQUIREMENTS
+
+Design system with:
+
+### Backend
+- Python FastAPI OR Node.js (choose best architecture, justify choice)
+- modular provider adapters
+- async request handling
+
+### Components
+- Provider Manager
+- Router Engine
+- Request Analyzer
+- Cache Layer (Redis optional)
+- Logging + Observability
+- Rate limiter per provider
+- Config manager (YAML/JSON + env overrides)
+
+---
+
+## 🔌 PROVIDER PLUGINS
+
+Each provider must be implemented as a plugin:
+
+interface:
+
+- list_models()
+- chat_completion()
+- embeddings()
+- health_check()
+
+NO provider-specific logic in router core.
+
+---
+
+## 🧪 RELIABILITY
+
+Must include:
+- retries with jitter
+- timeout control per provider
+- circuit breaker pattern
+- fallback chains
+
+---
+
+## 📊 OBSERVABILITY
+
+Include:
+- request tracing ID
+- latency tracking per provider
+- success/failure stats
+- cost estimation logs
+
+---
+
+## 🔐 SECURITY
+
+- API key encryption at rest
+- request validation
+- rate limiting per user
+- no logging of sensitive prompts by default
+
+---
+
+## 🧱 CONFIG-DRIVEN DESIGN
+
+Everything must be configurable:
+
+Example:
+
+providers:
+  - name: nvidia
+    base_url: ...
+    models: auto-discovered
+
+routing_policy:
+  strategy: adaptive
+
+NO hardcoded model names inside logic.
+
+---
+
+## 🧠 SMART FEATURES (IMPORTANT)
+
+- dynamic model ranking system
+- self-learning routing (based on past success/failure)
+- caching of successful model routing decisions
+- request similarity detection
+
+---
+
+## 📦 OUTPUT REQUIRED FROM YOU
+
+1. System architecture diagram (text-based is fine)
+2. Full folder structure
+3. Core backend implementation
+4. Provider plugin system
+5. Router engine implementation
+6. Config system
+7. Example .env + config.yaml
+8. Example API usage (curl + Python)
+9. Explanation of design decisions
+10. Scalability considerations
+
+---
+
+## 🚫 STRICT RULES
+
+- No hardcoded routing rules
+- No fake APIs
+- No pseudo logic without explanation
+- No simplified toy implementation
+- Must be production-grade thinking
+- Must assume system will handle real traffic
+- Must not assume only one provider will exist
+
+---
+
+## 🧩 FINAL GOAL
+
+This system should be comparable to:
+
+- LiteLLM (but smarter routing)
+- OpenRouter (but self-hosted)
+- LangChain router (but production-grade and minimal dependency)
+
+Focus on engineering excellence, not demo code.

@@ -1,0 +1,3 @@
+{"time":"2026-05-28T03:48:59.377486106-04:00","level":"INFO","msg":"Sentry initialized","dsn":"https://37607459fe10***","environment":"PROD","release":"8.0.20","sandbox_id":"unknown"}
+{"time":"2026-05-28T03:48:59.377569748-04:00","level":"INFO","msg":"Sentry initialized successfully"}
+{"time":"2026-05-28T03:48:59.377953871-04:00","level":"INFO","msg":"unknown initialized"}

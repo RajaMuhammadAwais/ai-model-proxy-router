@@ -1,0 +1,28 @@
+providers:
+  - name: nvidia-nim
+    base_url: "https://api.nvcf.nvidia.com/v1"
+    api_key: "${NVIDIA_NIM_API_KEY}"
+    models: [] # Auto-discover
+  - name: openrouter
+    base_url: "https://openrouter.ai/api/v1"
+    api_key: "${OPENROUTER_API_KEY}"
+    models: [] # Auto-discover
+  - name: groq
+    base_url: "https://api.groq.com/openai/v1"
+    api_key: "${GROQ_API_KEY}"
+    models: [] # Auto-discover
+  - name: gemini
+    base_url: "https://generativelanguage.googleapis.com/v1beta"
+    api_key: "${GEMINI_API_KEY}"
+    models: [] # Auto-discover
+
+routing_policy:
+  strategy: adaptive
+  weights:
+    latency: 0.3
+    cost: 0.3
+    capability: 0.4
+
+cache_enabled: True
+redis_url: "${REDIS_URL}"
+log_level: INFO

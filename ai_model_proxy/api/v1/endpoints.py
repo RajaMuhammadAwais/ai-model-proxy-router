@@ -1,0 +1,31 @@
+from fastapi import APIRouter, HTTPException, Request
+from ...models.llm_metadata import ChatCompletionRequest
+from typing import Any, Dict
+
+router = APIRouter()
+
+from fastapi import Depends
+from ...core.manager import ProviderManager
+from ...security.auth import get_api_key
+
+def get_pm():
+    from ...main import provider_manager
+    return provider_manager
+
+@router.post("/chat/completions")
+async def chat_completions(
+    request: ChatCompletionRequest, 
+    pm: ProviderManager = Depends(get_pm),
+    api_key: str = Depends(get_api_key)
+):
+    return await pm.handle_chat_completion(request)
+
+@router.get("/models")
+async def list_models(pm: ProviderManager = Depends(get_pm), api_key: str = Depends(get_api_key)):
+    if not pm.models:
+        await pm.refresh_models()
+    return {"data": [m.dict() for m in pm.models]}
+
+@router.post("/embeddings")
+async def embeddings(request: Dict[str, Any]):
+    return {"message": "Embeddings logic not yet implemented"}

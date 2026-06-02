@@ -1,0 +1,27 @@
+{"time":"2026-06-02T10:49:40.632032306Z","level":"INFO","msg":"Sentry initialized","dsn":"https://37607459fe10***","environment":"PROD","release":"8.0.20","sandbox_id":"i3c1mzpgqbw3j4u2vgm7o"}
+{"time":"2026-06-02T10:49:40.632270116Z","level":"INFO","msg":"Sentry initialized successfully"}
+{"time":"2026-06-02T10:49:40.633376681Z","level":"INFO","msg":"State sync service starting","log_file":"/home/ubuntu/.logs/state-sync/state-sync.log"}
+{"time":"2026-06-02T10:49:40.636495126Z","level":"INFO","msg":"[otel] Providers initialised (traces+metrics+logs)","service":"sandbox-runtime-v2","endpoint":"https://http.butterflyotel.online"}
+{"time":"2026-06-02T10:49:40.636517015Z","level":"INFO","msg":"[otel] trace propagation enabled","propagators":"tracecontext,baggage","exporter":"otlp/http","endpoint":"https://http.butterflyotel.online","service.name":"sandbox-runtime-v2","service.version":"8.0.20"}
+{"time":"2026-06-02T10:49:40.63653706Z","level":"INFO","msg":"OTel log bridge enabled"}
+{"time":"2026-06-02T10:49:40.636577669Z","level":"INFO","msg":"[sbxotel] process telemetry initialised","program":"state-sync","sandbox_id":"i3c1mzpgqbw3j4u2vgm7o","session_id":"ZfHKuPnd36iAImdJDwZ41k"}
+{"time":"2026-06-02T10:49:40.63672716Z","level":"INFO","msg":"Starting state sync service","sandbox_id":"i3c1mzpgqbw3j4u2vgm7o","session_id":"ZfHKuPnd36iAImdJDwZ41k"}
+{"time":"2026-06-02T10:49:40.638941855Z","level":"INFO","msg":"Pulling initial state from S3","sandbox_id":"i3c1mzpgqbw3j4u2vgm7o","session_id":"ZfHKuPnd36iAImdJDwZ41k"}
+{"time":"2026-06-02T10:49:41.094370608Z","level":"INFO","msg":"Pulled state from S3","etag":"\"8f4df049385cd0d4746cc9a95f42a918\"","cookie_domains":30,"localStorage_domains":12,"sandbox_id":"i3c1mzpgqbw3j4u2vgm7o","session_id":"ZfHKuPnd36iAImdJDwZ41k"}
+{"time":"2026-06-02T10:49:41.094419956Z","level":"INFO","msg":"Connecting to browser","port":"9222","sandbox_id":"i3c1mzpgqbw3j4u2vgm7o","session_id":"ZfHKuPnd36iAImdJDwZ41k"}
+{"time":"2026-06-02T10:49:41.098840134Z","level":"WARN","msg":"No suitable target found, creating new context (will create about:blank)","sandbox_id":"i3c1mzpgqbw3j4u2vgm7o","session_id":"ZfHKuPnd36iAImdJDwZ41k"}
+{"time":"2026-06-02T10:49:41.099466867Z","level":"INFO","msg":"Successfully connected to browser","sandbox_id":"i3c1mzpgqbw3j4u2vgm7o","session_id":"ZfHKuPnd36iAImdJDwZ41k"}
+{"time":"2026-06-02T10:49:41.09947782Z","level":"INFO","msg":"Syncing state to browser","sandbox_id":"i3c1mzpgqbw3j4u2vgm7o","session_id":"ZfHKuPnd36iAImdJDwZ41k"}
+{"time":"2026-06-02T10:49:41.100023789Z","level":"INFO","msg":"Syncing cookies to browser","cookie_count":79,"sandbox_id":"i3c1mzpgqbw3j4u2vgm7o","session_id":"ZfHKuPnd36iAImdJDwZ41k"}
+{"time":"2026-06-02T10:49:41.198247558Z","level":"INFO","msg":"Successfully synced cookies to browser","sandbox_id":"i3c1mzpgqbw3j4u2vgm7o","session_id":"ZfHKuPnd36iAImdJDwZ41k"}
+{"time":"2026-06-02T10:49:41.198294128Z","level":"INFO","msg":"Successfully synced state to browser","sandbox_id":"i3c1mzpgqbw3j4u2vgm7o","session_id":"ZfHKuPnd36iAImdJDwZ41k"}
+{"time":"2026-06-02T10:49:41.198299225Z","level":"INFO","msg":"Setting up state watchers","sandbox_id":"i3c1mzpgqbw3j4u2vgm7o","session_id":"ZfHKuPnd36iAImdJDwZ41k"}
+{"time":"2026-06-02T10:49:41.198309148Z","level":"INFO","msg":"Starting CDP watcher","sandbox_id":"i3c1mzpgqbw3j4u2vgm7o","session_id":"ZfHKuPnd36iAImdJDwZ41k"}
+{"time":"2026-06-02T10:49:41.203944131Z","level":"INFO","msg":"CDP watcher bound to hidden monitoring target","target_id":"32AA50D385435610921E2063EBD5361C","sandbox_id":"i3c1mzpgqbw3j4u2vgm7o","session_id":"ZfHKuPnd36iAImdJDwZ41k"}
+{"time":"2026-06-02T10:49:41.226920179Z","level":"INFO","msg":"CDP watcher primed hidden monitoring target attach","target_id":"32AA50D385435610921E2063EBD5361C","sandbox_id":"i3c1mzpgqbw3j4u2vgm7o","session_id":"ZfHKuPnd36iAImdJDwZ41k"}
+{"time":"2026-06-02T10:49:41.226969614Z","level":"INFO","msg":"State watchers setup complete","sandbox_id":"i3c1mzpgqbw3j4u2vgm7o","session_id":"ZfHKuPnd36iAImdJDwZ41k"}
+{"time":"2026-06-02T10:49:41.226998013Z","level":"INFO","msg":"Starting cookie polling","interval":1000000000,"sandbox_id":"i3c1mzpgqbw3j4u2vgm7o","session_id":"ZfHKuPnd36iAImdJDwZ41k"}
+{"time":"2026-06-02T10:49:41.227008358Z","level":"INFO","msg":"Starting target monitoring","sandbox_id":"i3c1mzpgqbw3j4u2vgm7o","session_id":"ZfHKuPnd36iAImdJDwZ41k"}
+{"time":"2026-06-02T10:49:41.22709835Z","level":"INFO","msg":"Started watching config file","path":"/home/ubuntu/.config/state-sync/state-sync-config.yaml","sandbox_id":"i3c1mzpgqbw3j4u2vgm7o","session_id":"ZfHKuPnd36iAImdJDwZ41k"}
+{"time":"2026-06-02T10:49:41.227724331Z","level":"INFO","msg":"Wrote sync ready marker","path":"/home/ubuntu/.config/state-sync/.sync-ready","sandbox_id":"i3c1mzpgqbw3j4u2vgm7o","session_id":"ZfHKuPnd36iAImdJDwZ41k"}
+{"time":"2026-06-02T10:49:41.227738317Z","level":"INFO","msg":"State sync service started successfully","sandbox_id":"i3c1mzpgqbw3j4u2vgm7o","session_id":"ZfHKuPnd36iAImdJDwZ41k"}
